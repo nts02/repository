@@ -34,13 +34,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
 
-{{--                <li class="nav-item">--}}
-{{--                    @if(request()->is('books') OR request()->is('books/*'))--}}
-{{--                        <a class="nav-link custom " href="{{ route('books.index') }}">Book</a>--}}
-{{--                    @else--}}
-{{--                        <a class="nav-link " href="{{ route('books.index') }}">Book</a>--}}
-{{--                    @endif--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    @if(request()->is('books') OR request()->is('books/*'))
+                        <a class="nav-link custom " href="{{ route('books.index') }}">Book</a>
+                    @else
+                        <a class="nav-link " href="{{ route('books.index') }}">Book</a>
+                    @endif
+                </li>
 
                 <li class="nav-item">
                     @if(request()->is('authors') OR request()->is('authors/*'))

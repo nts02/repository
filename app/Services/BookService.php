@@ -45,4 +45,20 @@ class BookService
     {
         return $this->bookRepository->delete($id);
     }
+
+    public function getStoreArray($id)
+    {
+        $store_array = $this->bookRepository->getStoreArrayById($id);
+        $array = array();
+        foreach ($store_array as $item) {
+            array_push($array,$item->store_id);
+        }
+
+        return $array;
+    }
+
+    public function getLatestBook()
+    {
+        return $this->bookRepository->getLatestBook();
+    }
 }
