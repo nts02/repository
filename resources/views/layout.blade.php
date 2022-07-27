@@ -62,13 +62,13 @@
                     @endif
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    @if(request()->is('stores') OR request()->is('stores/*'))--}}
-{{--                        <a class="nav-link custom" href="{{ route('stores.index') }}">Store</a>--}}
-{{--                    @else--}}
-{{--                        <a class="nav-link " href="{{ route('stores.index') }}">Store</a>--}}
-{{--                    @endif--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    @if(request()->is('stores') OR request()->is('stores/*'))
+                        <a class="nav-link custom" href="{{ route('stores.index') }}">Store</a>
+                    @else
+                        <a class="nav-link " href="{{ route('stores.index') }}">Store</a>
+                    @endif
+                </li>
             </ul>
         </div>
     </nav>
