@@ -25,11 +25,9 @@ class AuthorService
 
     public function store(array $data)
     {
-        if($data['author_name']=='') {
-            unset($data['new_name']);
-            return $this->authorRepository->create($data);
-        }
-        return false;
+        unset($data['new_name']);
+        return $this->authorRepository->create($data);
+
     }
 
     public function update(array $data,$id)
