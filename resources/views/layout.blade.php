@@ -52,15 +52,15 @@
                     @endif
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    @if(request()->is('categories') OR request()->is('categories/*'))--}}
-{{--                        <a class="nav-link custom"--}}
-{{--                           href="{{ route('categories.index') }}">Category</a>--}}
-{{--                    @else--}}
-{{--                        <a class="nav-link "--}}
-{{--                           href="{{ route('categories.index') }}">Category</a>--}}
-{{--                    @endif--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    @if(request()->is('categories') OR request()->is('categories/*'))
+                        <a class="nav-link custom"
+                           href="{{ route('categories.index') }}">Category</a>
+                    @else
+                        <a class="nav-link "
+                           href="{{ route('categories.index') }}">Category</a>
+                    @endif
+                </li>
 
 {{--                <li class="nav-item">--}}
 {{--                    @if(request()->is('stores') OR request()->is('stores/*'))--}}
