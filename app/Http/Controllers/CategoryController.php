@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->categoryService->index();
+
+        return view('category.index',compact('categories'));
     }
 
     /**
@@ -24,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.category_create');
     }
 
     /**
@@ -35,7 +45,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($this->categoryService->store($request->all())) {
+
+            $notification = [
+                'message'    => 'Add Category Successfully',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->route('categories.index')->with($notification);
+        }
+
+        $notification = [
+            'message'    => 'Add Category Fail',
+            'alert-type' => 'error',
+        ];
+
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -44,9 +69,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $result = $this->categoryService->show($id);
+
+        return $result;
     }
 
     /**
@@ -55,9 +82,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = $this->categoryService->show($id);
+
+        return view('category.category_edit',compact('category'));
     }
 
     /**
@@ -67,9 +96,25 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request)
     {
-        //
+        $result = $this->categoryService->update($request->all(), $request->id);
+        if(!$result) {
+
+            $notification = [
+                'message'    => 'Add Category Fail',
+                'alert-type' => 'error',
+            ];
+
+            return redirect()->back()->with($notification);
+        }
+
+        $notification = [
+            'message'    => 'Add Category Successfully',
+            'alert-type' => 'success',
+        ];
+
+        return redirect()->route('categories.index')->with($notification);
     }
 
     /**
@@ -78,8 +123,19 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        //xoa cac doi tuong book lien quan toi category chuan bi xoa
+        $category = $this->categoryService->show($id);
+        $category->books()->delete();
+
+        $this->categoryService->delete($id);
+
+        $notification = [
+            'message'    => 'Deleted Author Successfully',
+            'alert-type' => 'warning',
+        ];
+
+        return redirect()->route('categories.index')->with($notification);
     }
 }
