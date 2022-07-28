@@ -22,4 +22,12 @@ class StoreRepository extends BaseRepository
     {
         return $this->index();
     }
+
+    public function searchStore($data)
+    {
+        $result = Store::where('store_name','LIKE','%'.$data.'%')
+                       ->orWhere('address','LIKE','%'.$data.'%')->get();
+
+        return $result;
+    }
 }

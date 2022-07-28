@@ -23,4 +23,10 @@ class CategoryRepository extends BaseRepository
         $result = $this->index();
         return $result;
     }
+
+    public function searchCategory($text)
+    {
+        $result = Category::where('category_name','LIKE','%'.$text.'%')->get();
+        return $result;
+    }
 }

@@ -15,6 +15,10 @@ class StoreService
 
     public function index()
     {
+        $text = \request()->search;
+        if($text!="") {
+            return $this->storeRepository->searchStore($text);
+        }
         return $this->storeRepository->getListStore();
     }
 

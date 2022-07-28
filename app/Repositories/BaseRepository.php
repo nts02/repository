@@ -63,4 +63,5 @@ abstract class BaseRepository implements RepositoryInterface
         // TODO: Implement delete() method.
         return $this->getModel()::find($id)->delete();
     }
+
 }

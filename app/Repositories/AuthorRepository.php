@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Author;
+use Illuminate\Http\Request;
 
 class AuthorRepository extends BaseRepository
 {
@@ -21,12 +22,13 @@ class AuthorRepository extends BaseRepository
 
     public function getAllAuthor()
     {
-        $result = Author::orderBy('author_name')->get();
+        $result = Author::paginate(8);
         return $result;
     }
 
-    public function addAuthor()
+    public function searchAuthor($text)
     {
-
+        $result = Author::where('author_name','LIKE','%'.$text.'%')->paginate(8);
+        return $result;
     }
 }

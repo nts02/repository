@@ -15,6 +15,10 @@ class AuthorService
 
     public function index()
     {
+        $text = \request()->search;
+        if($text !="") {
+            return $this->authorRepository->searchAuthor($text);
+        }
         return $this->authorRepository->getAllAuthor();
     }
 

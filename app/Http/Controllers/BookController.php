@@ -18,13 +18,16 @@ class BookController extends Controller
     protected $authorService;
     protected $storeService;
 
-    public function __construct(BookService $bookService,CategoryService $categoryService,
-        AuthorService $authorService,StoreService $storeService)
-    {
-        $this->bookService = $bookService;
+    public function __construct(
+        BookService $bookService,
+        CategoryService $categoryService,
+        AuthorService $authorService,
+        StoreService $storeService
+    ) {
+        $this->bookService     = $bookService;
         $this->categoryService = $categoryService;
-        $this->authorService = $authorService;
-        $this->storeService = $storeService;
+        $this->authorService   = $authorService;
+        $this->storeService    = $storeService;
     }
 
     /**
@@ -35,8 +38,7 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->bookService->index();
-
-        return view('book.index',compact('books'));
+        return view('book.index', compact('books'));
     }
 
     /**
@@ -47,15 +49,17 @@ class BookController extends Controller
     public function create()
     {
         $categories = $this->categoryService->index();
-        $authors = $this->authorService->index();
-        $stores = $this->storeService->index();
-        return view('book.book_create',compact('categories','authors','stores'));
+        $authors    = $this->authorService->index();
+        $stores     = $this->storeService->index();
+
+        return view('book.book_create', compact('categories', 'authors', 'stores'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -78,34 +82,36 @@ class BookController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Book  $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $book = $this->bookService->show($id);
 
-        return view('book.view',compact('book'));
+        return view('book.view', compact('book'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Book  $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $book = $this->bookService->show($id);
-        $author_info = $book->author;
+        $book          = $this->bookService->show($id);
+        $author_info   = $book->author;
         $category_info = $book->category;
-        $authors = $this->authorService->index();
-        $categories = $this->categoryService->index();
-        $stores = $this->storeService->index();
+        $authors       = $this->authorService->index();
+        $categories    = $this->categoryService->index();
+        $stores        = $this->storeService->index();
 
         $array = $this->bookService->getStoreArray($id);
 
         return view('book.book_edit',
-            compact('book','authors','categories','stores','author_info','category_info','array'));
+            compact('book', 'authors', 'categories', 'stores', 'author_info', 'category_info', 'array'));
     }
 
     /**
@@ -113,11 +119,12 @@ class BookController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Book  $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $this->bookService->update($request->all(),$request->id);
+        $this->bookService->update($request->all(), $request->id);
 
         $result = $this->bookService->show($request->id);
         $result->stores()->sync($request->store_id);
@@ -134,6 +141,7 @@ class BookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Book  $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

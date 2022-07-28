@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Services\AuthorService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $list_author    = $this->authorService->index();
+        $list_author = $this->authorService->index();
         return view('author.index', compact('list_author'));
     }
 
@@ -133,4 +134,5 @@ class AuthorController extends Controller
 
         return redirect()->route('authors.index')->with($notification);
     }
+
 }

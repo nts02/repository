@@ -15,6 +15,10 @@ class CategoryService
 
     public function index()
     {
+        $text = \request()->search;
+        if($text!="") {
+            return $this->categoryRepository->searchCategory($text);
+        }
         return $this->categoryRepository->getAllCategory();
     }
 

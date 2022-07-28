@@ -15,6 +15,11 @@ class BookService
 
     public function index()
     {
+        $text = \request()->search;
+        if ($text != "") {
+            return $this->bookRepository->searchBook($text);
+        }
+
         return $this->bookRepository->getAllBook();
     }
 
@@ -26,18 +31,20 @@ class BookService
     public function store(array $data)
     {
         unset($data['store_id']);
+
         return $this->bookRepository->create($data);
     }
 
-    public function update(array $data,$id)
+    public function update(array $data, $id)
     {
         $result = $this->bookRepository->update([
-            'book_name' => $data['book_name'],
-            'price' => $data['price'],
-            'author_id' => $data['author_id'],
+            'book_name'   => $data['book_name'],
+            'price'       => $data['price'],
+            'author_id'   => $data['author_id'],
             'category_id' => $data['category_id'],
             'description' => $data['description']
-        ],$id);
+        ], $id);
+
         return $result;
     }
 
@@ -49,9 +56,9 @@ class BookService
     public function getStoreArray($id)
     {
         $store_array = $this->bookRepository->getStoreArrayById($id);
-        $array = array();
+        $array       = array();
         foreach ($store_array as $item) {
-            array_push($array,$item->store_id);
+            array_push($array, $item->store_id);
         }
 
         return $array;
@@ -61,4 +68,5 @@ class BookService
     {
         return $this->bookRepository->getLatestBook();
     }
+
 }
